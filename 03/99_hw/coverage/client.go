@@ -13,12 +13,6 @@ import (
 )
 
 //nolint:unused,varcheck
-const (
-	orderAsc = iota
-	orderDesc
-)
-
-//nolint:unused,varcheck
 var (
 	errTest = errors.New("testing")
 	client  = &http.Client{Timeout: time.Second}
@@ -42,10 +36,6 @@ type SearchErrorResponse struct {
 }
 
 const (
-	OrderByAsc  = 1
-	OrderByAsIs = 0
-	OrderByDesc = -1
-
 	ErrorBadOrderField = `OrderField invalid`
 )
 
