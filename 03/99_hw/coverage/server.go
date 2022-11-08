@@ -28,15 +28,15 @@ type Root struct {
 }
 
 const (
-	writeError    = "can not close file-%w"
+	writeError    = "can not answer-%w"
 	internalError = "internal server error"
 )
 
 func initMap() map[string]interface{} {
 	out := make(map[string]interface{})
-	out["0"] = ""
-	out["1"] = ""
-	out["MyToken"] = ""
+	out["0"] = nil
+	out["1"] = nil
+	out["MyToken"] = nil
 	return out
 }
 func SearchServer(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,14 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 	orderField := r.URL.Query().Get("order_field")
 	limit := r.URL.Query().Get("limit")
 	offset := r.URL.Query().Get("offset")
-	orderBy := r.URL.Query().Get("order_by")
+	orderBy, err := strconv.Atoi(r.URL.Query().Get("order_by"))
+	if err != nil {
+		w.WriteHeader(500)
+		_, errW := w.Write([]byte(internalError))
+		if err != nil {
+			log.Println(fmt.Errorf(writeError, errW))
+		}
+	}
 	token := r.Header.Get("AccessToken")
 	if _, ok := tokenMap[token]; !ok {
 		w.WriteHeader(401)
@@ -89,15 +96,11 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 	}
 	switch orderField {
 	case "Id":
-		if orderBy == strconv.Itoa(1) {
+		if orderBy == 1 || orderBy == -1 {
 			sort.Slice(data.List, func(i, j int) (less bool) {
-				return data.List[i].Id < data.List[j].Id
+				return orderBy*data.List[i].Id < orderBy*data.List[j].Id
 			})
-		} else if orderBy == strconv.Itoa(-1) {
-			sort.Slice(data.List, func(i, j int) (less bool) {
-				return data.List[i].Id > data.List[j].Id
-			})
-		} else if orderBy != strconv.Itoa(0) {
+		} else if orderBy != 0 {
 			log.Println(fmt.Errorf("error - orderBy invalid"))
 			w.WriteHeader(400)
 			_, errW := w.Write([]byte("invalid order_by\n"))
@@ -107,15 +110,15 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	case "Name":
-		if orderBy == strconv.Itoa(1) {
+		if orderBy == 1 {
 			sort.Slice(data.List, func(i, j int) (less bool) {
 				return data.List[i].FirstName+" "+data.List[i].LastName < data.List[j].FirstName+" "+data.List[j].LastName
 			})
-		} else if orderBy == strconv.Itoa(-1) {
+		} else if orderBy == -1 {
 			sort.Slice(data.List, func(i, j int) (less bool) {
 				return data.List[i].FirstName+" "+data.List[i].LastName > data.List[j].FirstName+" "+data.List[j].LastName
 			})
-		} else if orderBy != strconv.Itoa(0) {
+		} else if orderBy != 0 {
 			log.Println(fmt.Errorf("error - orderBy invalid"))
 			w.WriteHeader(400)
 			_, errW := w.Write([]byte("invalid order_by \n"))
@@ -125,15 +128,11 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	case "Age":
-		if orderBy == strconv.Itoa(1) {
+		if orderBy == 1 || orderBy == -1 {
 			sort.Slice(data.List, func(i, j int) (less bool) {
-				return data.List[i].Age < data.List[j].Age
+				return orderBy*data.List[i].Age < orderBy*data.List[j].Age
 			})
-		} else if orderBy == strconv.Itoa(-1) {
-			sort.Slice(data.List, func(i, j int) (less bool) {
-				return data.List[i].Age > data.List[j].Age
-			})
-		} else if orderBy != strconv.Itoa(0) {
+		} else if orderBy != 0 {
 			log.Println(fmt.Errorf("error - orderBy invalid"))
 			w.WriteHeader(400)
 			_, errW := w.Write([]byte("invalid order_by \n"))
