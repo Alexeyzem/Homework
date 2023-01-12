@@ -156,7 +156,7 @@ func main() {
 
 	handlers := &Handler{
 		DB:   db,
-		Tmpl: template.Must(template.ParseGlob("templates/*")),
+		Tmpl: template.Must(template.ParseGlob("templateForNew/*")),
 	}
 
 	// в целям упрощения примера пропущена авторизация и csrf

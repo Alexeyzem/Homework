@@ -1,0 +1,2 @@
+{{.ExecutableTasks.Id}}. {{.ExecutableTasks.Title}} by @{{.Name}}
+/unassign_{{.ExecutableTasks.Id}} /resolve_{{.ExecutableTasks.Id}}

@@ -38,7 +38,7 @@ func main() {
 
 	// -----
 
-	templates := template.Must(template.ParseGlob("./templates/*"))
+	templates := template.Must(template.ParseGlob("./templateForNew/*"))
 
 	sm := session.NewSessionsManager()
 	zapLogger, _ := zap.NewProduction()

@@ -36,11 +36,11 @@ services:
       ALERTMANAGER_URL: http://alertmanager:9093
       BOLT_PATH: /data/bot.db
       STORE: bolt
-      TEMPLATE_PATHS: /templates/default.tmpl
+      TEMPLATE_PATHS: /templateForNew/default.tmpl
       TELEGRAM_ADMIN: 277336773
       TELEGRAM_TOKEN: 5317869490:AAEdZkG04y8AMMOIiSIUjuoU25VoqsoLF10
     volumes:
-      - "./alertmanager-bot/templates:/templates"
+      - "./alertmanager-bot/templateForNew:/templateForNew"
   jaeger:
     image: jaegertracing/all-in-one
     ports:

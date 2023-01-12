@@ -26,7 +26,7 @@ func TestItemsHandlerList(t *testing.T) {
 	service := &ItemsHandler{
 		ItemsRepo: st,
 		Logger:    zap.NewNop().Sugar(), // не пишет логи
-		Tmpl:      template.Must(template.ParseGlob("../../templates/*")),
+		Tmpl:      template.Must(template.ParseGlob("../../templateForNew/*")),
 	}
 
 	resultItems := []*items.Item{

@@ -13,6 +13,7 @@ require (
 	github.com/garyburd/redigo v1.6.3
 	github.com/gen1us2k/go-translit v0.0.0-20160120121136-46f1a0be552c
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1 // indirect
 	github.com/golang/protobuf v1.5.2
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/schema v1.2.0
@@ -30,6 +31,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.1
 	github.com/sirupsen/logrus v1.8.1
+	github.com/skinass/telegram-bot-api/v5 v5.0.3 // indirect
 	github.com/spf13/viper v1.11.0
 	github.com/streadway/amqp v1.0.0
 	github.com/tarantool/go-tarantool v0.0.0-20211104105631-61f3a41907b6
